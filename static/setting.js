@@ -4,7 +4,7 @@ var str;
 var data = {}
 function startGame() {
     myGameArea.start();
-    myGamePiece = new component(30, 30, "blue", 10, 120);
+    myGamePiece = new component(45, 30, "blue", 10, 120);
 }
 
 var myGameArea = {

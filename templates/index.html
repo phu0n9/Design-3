@@ -1,97 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<script type="text/javascript" src="static/setting.js" ></script>
-<link rel="stylesheet" type = "text/css" href="static/css/stylesheet.css">
+{% extends 'base.html' %}
+{% block content %}
+<div class="frameblock">
 
-<!-- <link rel="stylesheet" href="contactUs-stylesheet.css"> -->
-<style>
-    canvas{
-        width: 480px;
-        height: 250px;
-        border:1px solid #d3d3d3;
-        background-color: blanchedalmond;
-        float: right;
-    }
-</style>
-</head>
-<body onload="startGame()">
-    <!-- <header> -->
-        <!-- <a onclick="return toggleIconClickCount()" href="javascript:void(0);" class="icon-container"><img src="https://image.flaticon.com/icons/svg/483/483334.svg" alt="hamburger-icon" class="icon"></a> -->
-        <!-- <div class="container"> -->
-            <!-- <span><a href="homepage.html"><img src="https://simpleicon.com/wp-content/uploads/roll-film.png" alt="logo" class="logo"></a></span> -->
-            <!-- <nav>
-                <ul> -->
-                    <!-- <li><a href="homepage.html" id="home" class="navSection" onclick="return clickableNavBar(1)">Home</a></li>
-                    <li><a href="service.html" class="navSection" onclick="return clickableNavBar(2)">Service</a></li>
-                    <li>
-                        <a href="product-film-rolls.html" class="navSection" onclick="return clickableNavBar(3)">Product                           
-                                <img class="drop-down-icon" src="https://image.flaticon.com/icons/svg/60/60995.svg" alt="drop-down-icon"></a>
-                        <ul class="dropdown-hover">
-                            <td><a href="product-film-rolls.html" class="dropdown-item-tittle">Film Rolls</a></td>
-                            <td><a href="product-film-camera.html" class="dropdown-item-tittle">Film Cameras</a></td>
-                        </ul>
-                    </li>
-                    <li><a href="blog.html" class="navSection" onclick="return clickableNavBar(4)">Blog</a></li>
-                    <li><a href="contactUs.html" class="navSection navActive" onclick="return clickableNavBar(5)">Contact</a></li> -->
-                <!-- </ul>
-            </nav>
-        </div> -->
-    <!-- </header> -->
-    
-    <main class="form-container">
-        <!-- <img class="contact-image" src="https://api.time.com/wp-content/uploads/2017/01/camera-lead.jpg" alt="contact-img"> -->
-        <!-- <h1 class="inner-body-tittle">Contact Us</h1>      -->
-        <!-- <div class="form-box-row" id="canvas"> -->
-            <!-- <div class="form-box-column"> -->
-                <!-- <p class="form-box-tittle">Address</p> -->
-                <!-- <div class="map-section" id="mapholder"></div> -->
-                <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkmIEMcZalJiQR_Uij1W_xtO1_Upo6OD4&callback=initMap"></script> -->
-            <!-- <div class="contact-text-group">
-                    <div class="contact-text">
-                        <img class="icon-image" src="https://image.flaticon.com/icons/svg/1033/1033925.svg" alt="place">
-                        702 Nguyen Van Linh street, Tan Hung ward,district 7, Ho Chi Minh city,Vietnam
-                    </div>
-                    <div class="contact-text">
-                        <img class="icon-image" src="https://image.flaticon.com/icons/svg/601/601215.svg" alt="email-image">
-                        filmstore@gmail.com
-                    </div>
-                    <div class="contact-text">
-                        <img class="icon-image" src="https://image.flaticon.com/icons/svg/679/679397.svg" alt="telephone-image">
-                        +8412 345 6789
-                    </div>
-                </div>  -->
-            <!-- </div>  -->
-            <!-- <div class="form-box-column">        -->
-                <!-- <p class="form-box-tittle">Ask a question</p>
-                <form action="/action_page.php" name="myForm" method="post" class="form-section">
-                    First name
-                    <input type="text" name="firstName" id="firstName" placeholder="First Name" class="form-control" autofocus oninvalid="return validateName(this.id);" oninput="return validateName(this.id);">
-                    Last name-->
-                    <!-- <input type="text" placeholder="Last Name" class="form-control" name="lastName" id="lastName" oninvalid="return validateName(this.id);" oninput="return validateName(this.id);"> -->
-                    <!--Birthday-->
-                    <!-- <input type="date" name="bday" id="bday" class="form-control" max="2002-01-01"> -->
-                    <!--Gender-->
-                    <!-- <select name="gender" id="gender" class="form-control" oninvalid="return validateGender(this.id);" oninput="return validateGender(this.id);">
-                        <option value="default">[please choose]</option>
-                        <option value="female">Female</option>
-                        <option value="male">Male</option>
-                        <option value="unknown">Prefer not to say</option>
-                    </select> -->
-                        <!--Email-->
-                        <!-- <input type="email" name="email" id="email" class="form-control" placeholder="Enter email" oninput="return validateEmail();" oninput="return validateEmail();"> -->
-                        <!--Phone number-->
-                        <!-- <input type="tel" name="phone" id="phone" class="form-control" placeholder="Enter phone number" oninput="return validatePhoneNumber();" oninput="return validatePhoneNumber();"> -->
-                        <!--Question box-->
-                        <!-- <textarea name="comment-box" id="comment-box" class="form-control" placeholder="Enter your questions here..." maxlength="300" oninput="return validateTextArea();"></textarea> -->
-                <!-- </form> -->
-                <!-- <div id="counting-text" class="count-letters">only 300 characters left</div> -->
-                <!-- <input type="submit" value="submit" id="submitFormBtn" class="submitFormBtn" onclick="return submitQuestion();"> -->
-            <!-- </div>  -->
-        <!-- </div>             -->
-        <div class="container"> hello</div>
-    </main>
+<div id="path">
+    <h3>Path History</h3>
+    <iframe src="/static/move.html" width="580" height="460" frameborder="0" style="border:0" allowfullscreen></iframe>
+  </div>
+<div id="video">
+    <h3>Video Feed</h3>
+    <iframe src="{{ url_for('video_feed') }}" width="580" height="452" frameborder="0" style="border:0" allowfullscreen></iframe>
+  </div>
+</div
 
-</body>
-</html>
+<div class="frameblock2">
+<div id="datatable">
+<h3>Data Feed</h3>
+  <table>
+     <tr>
+        <th style="border-top-left-radius: 8px;">Velocity</th>
+        <td>{{ velocity }} meters per second</td>
+     </tr>
+     <tr>
+        <th>Direction</th>
+        <td>{{ direction }} degrees from origin</td>
+     </tr>
+  
+     <tr>
+        <th>Power Usage</th>
+        <td>{{ power }} watts</td>
+     </tr>
+     <tr>
+        <th style="border-bottom-left-radius: 8px;">Object Detected</th>
+        <td>{{ det_object }}</td>
+     </tr>
+  
+  </table> 
+</div>
+<div id="controls">
+<h3>Controls</h3>
+<div syle="clear:both; float:none; display:block;">
+<a href="{{ url_for('home') }}"><img style="margin-left:55px;" width="50" src="/static/css/up.png"></a>
+<a href="#"><img style="border-style:dashed; margin-left:76px;" width="150" src="/static/css/auto.png"></a>
+<a href="#"><img style="border-style:dashed; margin-left:20px;" width="190" src="/static/css/manual.png"></a>
+</div>
+<div syle="clear:both; float:none; display:block;">
+<a href="#"><img width="50" src="/static/css/left.png"></a>
+<a href="#"><img width="50" src="/static/css/down.png"></a>
+<a href="#"><img width="50" src="/static/css/right.png"></a>
+<a href="#"><img style="border-style:dashed; margin-left:20px;" width="150" src="/static/css/liftup.png"></a>
+<a href="#"><img style="border-style:dashed; margin-left:20px;" width="190" src="/static/css/liftdown.png"></a>
+</div>
+</div>
+<div style="display:block; clear:both; float:none;">&nbsp</div>
+</div>
+
+{% endblock %}

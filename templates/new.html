@@ -1,4 +1,36 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="/static/setting.js" ></script>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="/static/stylesheet2.css">
+    <style>
+        canvas{
+            width: 580px;
+            height:460px;
+            border:1px solid #d3d3d3;
+            background-color: blanchedalmond;
+            float: left;
+            border:0;
+        }
+    </style>
+</head>
+
+<nav>
+    <h1><a style="padding:0px;" href="{{ url_for('show_ui') }}"></a><img style="width:80px;padding: 5px 0px 0px 0px;" src="/static/css/cloudcar_logo.png"></a></h1>  
+</nav>
+  <section class="content">
+    <header>
+      <!-- {% block header %}{% endblock %} -->
+    </header>
+    <!-- {% for message in get_flashed_messages() %} -->
+      <div class="flash">{{ message }}</div>
+    <!-- {% endfor %} -->
+  </section>
+
 {% block content %}
 <div class="frameblock">
     <div id="path">
@@ -7,8 +39,8 @@
     </div>
     <div id="video">
         <h3>Video Feed</h3>
-        <img src="{{ url_for('video_feed') }}" alt="video" width="580" height="452" >
-    </div> 
+        <iframe src="{{ url_for('video_feed') }}" width="580" height="452" frameborder="0" style="border:0" ></iframe>
+    </div>
 
     <div class="frameblock2">
         <div id="datatable">
@@ -52,4 +84,7 @@
         </div>
     <div style="display:block; clear:both; float:none;">&nbsp</div>
 </div>
-{% endblock %} 
+{% endblock %}
+
+
+</html>

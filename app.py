@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 
 data = [{}]
+#hello
 
 @app.route('/home',methods=['GET'])
 def show_ui():

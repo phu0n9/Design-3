@@ -11,7 +11,7 @@ var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
         this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[2]);
+        document.body.insertBefore(this.canvas, document.body.childNodes[1]);
         this.interval = setInterval(updateGameArea, 20);
         window.addEventListener('keydown', function (e) {
             myGameArea.key = e.keyCode;

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+  {{ super() }}
+  {{ datepicker.loader() }} {# to load jQuery-ui #}
+  {{ datepicker.picker(id=".dp") }}
+{% endblock %}
+
+{% block header %}
+
+ 
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="formwrapper">
+  <h2 class="title">Select a user to view messages</h2>
+  <form method="POST" action="/users">
+      <div style="display:block; width:100%; clear:both; float:none;">
+      <div class="form-field">{{ form.name.label }} {{ form.name() }}</div>
+      </div>
+      <div style="display:block; width:100%; clear:both; float:none; min-height:50px; padding-top:10px;">
+      <div class="form-submit"> {{ form.submit }} </div>
+      </div>
+     
+  </form>
+</div>
+
+
+  {% for user in users %}
+    <div style = "width:100%; display:block; float:none; clear:both; padding-top:0px; padding-bottom:40px;">  
+    <div style="float: left; width:150px;">{{ user['name'] }}</div>
+
+    <div style="float: left; width:250px;">
+          <a class="greenbutton" style="margin-left: 5px;" href="{{ url_for('blog.messages', name=user['name']) }}">View Messages</a>
+</div>
+
+    </div>
+    <hr>
+  {% endfor %}
+
+{% endblock %}

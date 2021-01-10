@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+  {{ super() }}
+  {{ datepicker.loader() }} {# to load jQuery-ui #}
+  {{ datepicker.picker(id=".dp") }}
+{% endblock %}
+
+{% block header %}
+
+ 
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="formwrapper">
+  <h2 class="title">Messages from selected user</h2>
+</div>
+
+<hr>
+  {% for message in messages %}
+    <div style = "width:100%; display:block; float:none; clear:both; padding-top:15px; padding-bottom:15px;">  
+    <div style="width:100%;">{{ message['created'] }}</div>
+    <div style="width:100%; word-wrap:break-word;">{{ message['message'] }}</div>
+</div>
+
+    </div>
+    <hr>
+  {% endfor %}
+
+{% endblock %}

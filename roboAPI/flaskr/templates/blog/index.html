@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+  {{ super() }}
+  {{ datepicker.loader() }} {# to load jQuery-ui #}
+  {{ datepicker.picker(id=".dp") }}
+{% endblock %}
+
+{% block header %}
+
+ 
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="formwrapper">
+  <h2 class="title">Search for a Car</h2>
+  <form method="GET" action="/">
+  <div style="display:block; width:100%; clear:both; float:none;min-height:50px;">
+      <div class="form-field" style="float:left;">{{ form.make.label }} {{ form.make(size=20) }}</div>
+      <div class="form-field" style="float:left;">{{ form.body.label }} {{ form.body }}</div>
+      <div class="form-field">{{ form.cost.label }} {{ form.cost }}</div>
+</div>
+<div style="display:block; width:100%; clear:both; float:none;min-height:50px;">
+      <div class="form-field">{{ form.colour.label }} {{ form.colour }}</div>
+      <div class="form-field">{{ form.seats.label }} {{ form.seats }}</div>
+      </div>
+      <div style="display:block; width:100%; clear:both; float:none;">
+      
+      <div class="form-field">{{ form.start.label }} {{ form.start() }}</div>
+      <div class="form-field">{{ form.end.label }} {{ form.end() }}</div>
+      </div>
+      <div style="display:block; width:100%; clear:both; float:none; min-height:50px; padding-top:10px;">
+      <div class="form-submit"> {{ form.submit }}  {% if g.user %}
+    <a class="greenbutton" style="margin-left:20px;" href="{{ url_for('blog.create') }}">Add New</a>
+  {% endif %}</div>
+      </div>
+     
+  </form>
+</div>
+
+    
+     <table>
+  <tr>
+    <th style="border-top-left-radius: 8px;">Make</th>
+    <th>Body</th>
+    <th>Colour</th>
+    <th>Seats</th>
+    <th>Location</th>
+    <th>Hourly Cost</th>
+    <th style="border-top-right-radius: 8px;">Action</th>
+  </tr>
+  {% for car in cars %}
+  <tr>
+  <td>{{ car['make'] }}</td>
+    <td>{{ car['body'] }}</td>
+    <td>{{ car['colour'] }}</td>
+    <td>{{ car['seats'] }}</td>
+    <td>{{ car['location'] }}</td>
+    <td>{{ car['cost'] }}</td>
+    <td style="max-width:40px;">
+          <a class="greenbutton" style="margin-left: 5px;" href="{{ url_for('blog.update', id=car['id']) }}">Book now</a>
+</td>
+  </tr>
+  
+  {% endfor %}
+  </table> 
+{% endblock %}

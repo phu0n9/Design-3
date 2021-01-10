@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Post{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="make">Make</label>
+    <input name="make" id="make"> {{ request.form['make'] }}</input>
+    <label for="body">Body</label>
+    <input name="body" id="body">{{ request.form['body'] }}</input>
+    
+    <label for="colour">Colour</label>
+    <input name="colour" id="colour">{{ request.form['colour'] }}</input>
+    
+    <label for="seats">Seats</label>
+    <input name="seats" id="seats">{{ request.form['seats'] }}</input>
+    
+    <label for="location">Location</label>
+    <input name="location" id="location">{{ request.form['location'] }}</input>
+    
+    <label for="cost">Cost</label>
+    <input name="cost" id="cost">{{ request.form['cost'] }}</input>
+    
+    
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div class="loginbox">
+  <form method="post">
+  <div class="clearfix centerlogin">
+    <label for="username">Username</label>
+    <input name="username" id="username" required>
+  </div>
+  <div class="clearfix centerlogin">
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required>
+  </div>
+    <div class="clearfix centerlogin">
+    <input type="submit" value="Register">
+    <p>Already registered? <a href="/auth/login">Log in here.</a></p>
+    </div>
+  </form>
+  </div>
+{% endblock %}
+

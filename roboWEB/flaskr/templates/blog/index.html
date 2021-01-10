@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="frameblock">
+
+<div id="path">
+    <h3>Path History</h3>
+    <iframe src="static/move.html" width="580" height="460" frameborder="0" style="border:0" allowfullscreen></iframe>
+  </div>
+<div id="video">
+    <h3>Video Feed</h3>
+    <iframe src="static/video.html" width="580" height="460" frameborder="0" style="border:0" allowfullscreen></iframe>
+  </div>
+</div
+
+<div class="frameblock2">
+<div id="datatable">
+<h3>Data Feed</h3>
+  <table>
+     <tr>
+        <th style="border-top-left-radius: 8px;">Velocity</th>
+        <td>{{ velocity }} meters per second</td>
+     </tr>
+     <tr>
+        <th>Direction</th>
+        <td>{{ direction }} degrees from origin</td>
+     </tr>
+  
+     <tr>
+        <th>Power Usage</th>
+        <td>{{ power }} watts</td>
+     </tr>
+     <tr>
+        <th style="border-bottom-left-radius: 8px;">Object Detected</th>
+        <td>{{ det_object }}</td>
+     </tr>
+  
+  </table> 
+</div>
+<div id="controls">
+<h3>Controls</h3>
+<div syle="clear:both; float:none; display:block;">
+<a href="{{ url_for('blog.forward') }}"><img style="margin-left:55px;" width="50" src="/static/up.png"></a>
+<a href="#"><img style="border-style:dashed; margin-left:76px;" width="150" src="/static/auto.png"></a>
+<a href="#"><img style="border-style:dashed; margin-left:20px;" width="190" src="/static/manual.png"></a>
+</div>
+<div syle="clear:both; float:none; display:block;">
+<a href="#"><img width="50" src="/static/left.png"></a>
+<a href="#"><img width="50" src="/static/down.png"></a>
+<a href="#"><img width="50" src="/static/right.png"></a>
+<a href="#"><img style="border-style:dashed; margin-left:20px;" width="150" src="/static/liftup.png"></a>
+<a href="#"><img style="border-style:dashed; margin-left:20px;" width="190" src="/static/liftdown.png"></a>
+</div>
+</div>
+<div style="display:block; clear:both; float:none;">&nbsp</div>
+</div>
+
+{% endblock %}

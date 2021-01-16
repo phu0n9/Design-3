@@ -4,20 +4,37 @@ from flask import request, jsonify
 from flask import Flask,render_template, Response
 
 from camera import VideoCamera
-# from manualControl import *
+from manualControl import *
+from threading import Timer
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
 data = [{}]
+trans_data ={
+            'velocity':data_display().get('velocity'),
+            'power':data_display().get('power'),
+            'direction':data_display().get('direction')
+        }
+
+def update_data(interval):
+    Timer(interval, update_data, [interval]).start()
+    global transfer_data
+    transfer_data =  {
+            'velocity':data_display().get('velocity'),
+            'power':data_display().get('power'),
+            'direction':data_display().get('direction')
+        }
+    return transfer_data
 
 @app.route('/home',methods=['GET'])
 def show_ui():
-    velocity = "5"
-    direction = "34"
-    power = "4.24"
-    det_object = "None"
-    return render_template("index.html", velocity=velocity, direction=direction, power=power, det_object=det_object) 
+    # velocity = data_display().get('velocity')
+    # direction = data_display().get('direction')
+    # power = data_display().get('power')
+    # det_object = "None"
+    # , velocity=velocity, direction=direction, power=power, det_object=det_object
+    return render_template("index.html") 
 
 def gen(camera):
     while True:
@@ -37,10 +54,14 @@ def home():
         req = request.json
         data[0] = req
         print(data[0].get('key'))
-        # keyboardControl(data[0].get('key'))
-        return jsonify(data)
-        
+    return jsonify(data)
+
+@app.route('/transfer',methods=['GET','POST'])
+def transfer_data():
+    if request.method == 'GET':
+        return jsonify(update_data(1000))
+    
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True,threaded=True)
 

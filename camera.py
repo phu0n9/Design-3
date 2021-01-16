@@ -1,6 +1,6 @@
 import cv2
 
-from objectDetection import *
+# from objectDetection import *
 
 class VideoCamera(object):
     def __init__(self):
@@ -27,7 +27,7 @@ class VideoCamera(object):
             # print(objectInfo)
                 # cv2.imshow("Output", image)
                 # cv2.waitKey(1)
-            image = cv2.resize(image,(530,430))
+            image = cv2.resize(image,(500,400))
 
         except Exception as e:
             if not image:      # always check for None

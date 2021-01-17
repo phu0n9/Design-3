@@ -9,19 +9,17 @@ from flask import jsonify
 from werkzeug.exceptions import abort
 from flaskr.auth import login_required
 from flaskr.db import get_db
-from sense_hat import SenseHat
 import time
 
 bp = Blueprint("blog", __name__)
-sense = SenseHat()
-sense.set_imu_config(True, True, True)  # gyroscope accel and compass enable
-
 
 @bp.route("/getsensors", methods=("GET", "POST"))
 def getsensors():
     if request.method == "GET":
-        direction = sense.get_compass()
-        return (direction)
+    f = open("{directory}/sensors_data.json", "r") # paste directory here
+    sensorsData_json = f.read() 
+    sensorsData_json = json.loads(sensorsData_json)
+        return (sensorsData_json)
         
 
 @bp.route("/forward", methods=("GET", "POST"))

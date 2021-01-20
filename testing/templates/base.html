@@ -1,0 +1,16 @@
+<!doctype html>
+<title>{% block title %}{% endblock %}Robot Control Interface</title>
+<link rel="stylesheet" href="/static/css/style.css">
+<script type="text/javascript" src="/static/js/setting.js" ></script>
+<link rel="icon" href="https://www.pngrepo.com/png/211753/180/racing-cars.png">
+
+<nav>
+  <h1><a style="padding:0px;" href="{{ url_for('show_ui') }}"><img style="width:80px;padding: 5px 0px 0px 0px;" src="/static/css/cloudcar_logo.png"></a></h1>
+</nav>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% block content %}{% endblock %}
+</section>
+

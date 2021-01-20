@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="frameblock">
+    <div id="path">
+        <h3 id="path_text">Path History</h3>
+        <iframe src="/static/move.html" width="580" height="452" frameborder="0" style="border:0" alt="this"></iframe> 
+    </div>
+    <div id="video">
+        <h3>Video Feed</h3>
+        <img src="{{ url_for('video_feed') }}" alt="video" width="580" height="452" >
+    </div> 
+
+    <div class="frameblock2">
+        <iframe src="/static/displayData.html" id="datatable"></iframe>
+
+        <div id="controls">
+            <h3>Controls</h3>
+            <div syle="clear:both; float:none; display:block;">
+                <a id="up"><img style="margin-left:55px;" width="50" src="/static/css/up.png"></a>
+                <h3 style="float: right;" id="state">State</h3>
+            </div>
+            
+            <div syle="clear:both; float:none; display:block;">
+                <a id="left"><img width="50" src="/static/css/left.png" id="left"></a>
+                <a id="down"><img width="50" src="/static/css/down.png" id="down"></a>
+                <a id="right"><img width="50" src="/static/css/right.png" id="right"></a>
+                <img style="margin-left:20px;" width="100" src="/static/css/liftup.png">
+                <img style=" margin-left:20px;" width="100" src="/static/css/liftdown.png">
+                <img style=" margin-left:20px;" width="100" src="/static/css/start.png">
+                <img style=" margin-left:20px;" width="100" src="/static/css/manual.png">
+            </div>
+        </div>
+    <div style="display:block; clear:both; float:none;">&nbsp</div>
+</div>
+{% endblock %} 

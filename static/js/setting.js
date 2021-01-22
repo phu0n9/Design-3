@@ -9,6 +9,9 @@ var secondLand;
 var thirdLand;
 var first_manual_land;
 var second_manual_land;
+var transfer_data;
+var count = 0;
+
 
 function startGame() {
     myGameArea.start();
@@ -21,24 +24,6 @@ function startGame() {
     myGamePiece = new component(10, 10, "red", 40, 240,"");
 }
 
-function getData(){
-    var direction = document.getElementById('direction')
-    var velocity = document.getElementById('velocity')
-    var power = document.getElementById('power')
-    fetch(`${window.origin}/transfer`).then((resp) => resp.json())
-    .then(function(text){
-            console.log('Get response');
-            direction.innerText = text.direction;
-            velocity.innerText = text.velocity;
-            power.innerText = text.power;
-            // console.log(text.direction);
-            // console.log(text.velocity);
-            // console.log(text.power);
-    }).catch(function(error){
-            console.log(error)
-    })
-}
-
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
@@ -47,10 +32,9 @@ var myGameArea = {
         this.text = "";
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 40);
+        this.interval = setInterval(updateGameArea, 10);
         window.addEventListener('keydown', function (e) {
             myGameArea.key = e.keyCode;
-            addLocation();
         })
         window.addEventListener('keyup', function (e) {
             myGameArea.key = false;
@@ -83,55 +67,165 @@ function component(width, height, color, x, y,text) {
     }
 }
 
+function get_turn_right_button(){
+    fetch(`${window.origin}/right`).then((resp) => resp.json())
+    .then(function(text){
+        //do nothing
+     })
+    .catch(function(error){
+            console.log(error)
+    })
+    myGamePiece.speedY = -1;
+}
+
+function get_turn_left_button(){
+    fetch(`${window.origin}/left`).then((resp) => resp.json())
+    .then(function(text){
+        //do nothing
+     })
+    .catch(function(error){
+            console.log(error)
+    })
+    myGamePiece.speedY = 1;
+}
+
+function get_turn_up_button(){
+    fetch(`${window.origin}/up`).then((resp) => resp.json())
+    .then(function(text){
+        //do nothing
+     })
+    .catch(function(error){
+            console.log(error)
+    })
+    myGamePiece.speedX = -1;
+}
+
+function get_turn_down_button(){
+    fetch(`${window.origin}/down`).then((resp) => resp.json())
+    .then(function(text){
+        //do nothing
+     })
+    .catch(function(error){
+            console.log(error)
+    })
+    myGamePiece.speedX = 1;
+}
+
+function lift_up(){
+    fetch(`${window.origin}/lift_up`).then((resp) => resp.json())
+    .then(function(text){
+       //do nothing
+    }).catch(function(error){
+            console.log(error)
+    })
+}
+
+function lift_down(){
+    fetch(`${window.origin}/lift_down`).then((resp) => resp.json())
+    .then(function(text){
+        //do nothing
+     })
+    .catch(function(error){
+            console.log(error)
+    })
+}
+
 function manualControl(){
-    if (myGameArea.key && myGameArea.key == 65) {myGamePiece.speedX = -1; str = "a";}
-    if (myGameArea.key && myGameArea.key == 68) {myGamePiece.speedX = 1; str = "d";}
-    if (myGameArea.key && myGameArea.key == 87) {myGamePiece.speedY = -1; str = "s";}
-    if (myGameArea.key && myGameArea.key == 83) {myGamePiece.speedY = 1; str = "w";}
-    data = {
-            'key':str
+    if (myGameArea.key && myGameArea.key == 65) {get_turn_left_button() }
+    if (myGameArea.key && myGameArea.key == 68) { get_turn_right_button()}
+    if (myGameArea.key && myGameArea.key == 83) { get_turn_down_button()}
+    if (myGameArea.key && myGameArea.key == 87) { get_turn_up_button()}
+    if (myGameArea.key == 79){lift_up()}
+    if (myGameArea.key == 80){lift_down()}
+    if (myGameArea.key != 65 && myGameArea.key != 68 && myGameArea.key != 87 && myGameArea.key != 83 && myGameArea.key != 79 && myGameArea.key != 80){myGamePiece.speedY = 0; myGamePiece.speedX = 0;}
+}
+
+function startButton(){
+    fetch(`${window.origin}/stop`).then((resp) => resp.json())
+    .then(function(text){
+        //do nothing
+    }).catch(function(error){
+            console.log(error)
+    })
+}
+
+function changeState(){
+    fetch(`${window.origin}/mode`).then((resp) => resp.json())
+    .then(function(text){
+        //do nothing
+    }).catch(function(error){
+        console.log(error)
+    })
+}
+
+function checkStartOnPressed(){
+    if (myGamePiece.x == 40 && myGamePiece.y == 240){
+        if (myGameArea.key == 82){
+            startButton()
+            count = 1
         }
+    }
+    else if(myGamePiece.x == 285 && myGamePiece.y == 20){
+        if(myGameArea.key == 77){
+            changeState()
+            count = 2
+        }
+    }
+    return count
 }
 
 function updateGameArea() {
     myGameArea.clear();
     myGamePiece.speedX = 0;
     myGamePiece.speedY = 0;    
+    // console.log("x",myGamePiece.x)
+    // console.log("y",myGamePiece.y)
+    if(myGamePiece.x -myGamePiece.width <= 0){
+        myGamePiece.x = 0 + myGamePiece.width
+    }
+    else if(myGamePiece.x - myGamePiece.width > myGameArea.width){
+        myGamePiece.x = myGameArea.width - myGamePiece.width
+    }
+    else if(myGamePiece.y - myGamePiece.height < myGameArea.height){
+        myGamePiece.y = myGameArea.height + myGamePiece.height
+    }
 
-    if(myGamePiece.x  - myGamePiece.width < second_manual_land.width){
-        myGamePiece.x = second_manual_land.width + myGamePiece.width + 8
+    if (checkStartOnPressed() == 1){
+        if(myGamePiece.x  - myGamePiece.width < second_manual_land.width){
+            myGamePiece.x = second_manual_land.width + myGamePiece.width + 8
+        }
+        else if(myGamePiece.y - myGamePiece.height > startLocation.y){
+            myGamePiece.y = startLocation.y + myGamePiece.height 
+        }
+    
+        if (myGamePiece.y == firstLand.y && myGamePiece.x != secondLand.x){
+            myGamePiece.speedX += 1;
+            myGamePiece.speedY = 0;
+        }
+        else if(myGamePiece.y == firstLand.y && myGamePiece.x == secondLand.x){
+            myGamePiece.speedX = 0;
+            myGamePiece.speedY -= 1;
+        }
+        else if(myGamePiece.y != thirdLand.y && myGamePiece.x == secondLand.x){
+            myGamePiece.speedX = 0;
+            myGamePiece.speedY -= 1;
+        }
+        else if(myGamePiece.y == thirdLand.y && myGamePiece.x - myGamePiece.width > thirdLand.x){
+            myGamePiece.speedX -= 1;
+            myGamePiece.speedY = 0;
+        }
     }
-    else if(myGamePiece.y - myGamePiece.height > startLocation.y){
-        myGamePiece.y = startLocation.y + myGamePiece.height 
-    }
-
-
-    if (myGamePiece.y == firstLand.y && myGamePiece.x != secondLand.x){
-        myGamePiece.speedX += 1;
-        myGamePiece.speedY = 0;
-    }
-    else if(myGamePiece.y == firstLand.y && myGamePiece.x == secondLand.x){
-        myGamePiece.speedX = 0;
-        myGamePiece.speedY -= 1;
-    }
-    else if(myGamePiece.y != thirdLand.y && myGamePiece.x == secondLand.x){
-        myGamePiece.speedX = 0;
-        myGamePiece.speedY -= 1;
-    }
-    else if(myGamePiece.y == thirdLand.y && myGamePiece.x - myGamePiece.width > thirdLand.x){
-        myGamePiece.speedX -= 1;
-        myGamePiece.speedY = 0;
-    }
-    else{
+    else if (checkStartOnPressed() == 2){
         myGamePiece.speedX = 0;
         myGamePiece.speedY = 0;    
-        manualControl();
+        manualControl()
         if(myGamePiece.y  - myGamePiece.height < first_manual_land.height){
             myGamePiece.y = first_manual_land.height + myGamePiece.height
         }
         else if(myGamePiece.y + myGamePiece.height > second_manual_land.height){
             myGamePiece.y = second_manual_land.height - myGamePiece.height
         }
+    
     }
     firstLand.update();
     secondLand.update();
@@ -143,36 +237,36 @@ function updateGameArea() {
     myGamePiece.update();
 }
 
-function addLocation(){
-    fetch(`${window.origin}/`,{
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify(data),
-        cache: "no-cache",
-        headers: new Headers({
-            'Accept':'application/json',
-            'Content-Type':'application/json'
-        })
-    }).then(function(){
-        updateGameArea();
-        // console.log("Added")
-    })        
-    .catch(err => console.log(err))           
-}
+// function addLocation(){
+//     fetch(`${window.origin}/`,{
+//         method: "POST",
+//         credentials: "include",
+//         body: JSON.stringify(manualControl()),
+//         cache: "no-cache",
+//         headers: new Headers({
+//             'Accept':'application/json',
+//             'Content-Type':'application/json'
+//         })
+//     }).then(function(){
+//         updateGameArea();
+//         // console.log("Added")
+//     })        
+//     .catch(err => console.log(err))           
+// }
 
-function updateLocation(){
-    fetch(`${window.origin}/`,{
-        method: "PUT",
-        credentials: "include",
-        body: JSON.stringify({id:0,data}),
-        cache: "no-cache",
-        headers: new Headers({
-            'Accept':'application/json',
-            'Content-Type':'application/json'
-        })
-    }).then(function(){
-        updateGameArea();
-        console.log("Updated")
-    })        
-    .catch(err => console.log(err))      
-}
+// function updateLocation(){
+//     fetch(`${window.origin}/`,{
+//         method: "PUT",
+//         credentials: "include",
+//         body: JSON.stringify({id:0,data}),
+//         cache: "no-cache",
+//         headers: new Headers({
+//             'Accept':'application/json',
+//             'Content-Type':'application/json'
+//         })
+//     }).then(function(){
+//         updateGameArea();
+//         console.log("Updated")
+//     })        
+//     .catch(err => console.log(err))      
+// }

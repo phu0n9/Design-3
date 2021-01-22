@@ -7,29 +7,29 @@ Name: Group 10
 ## Features:
 
 Automatic moving: 
-* Following wall * 
-* Turn left *
-* Obstacle avoidance *
-* Obstacle detection *
-* Run through automatic door *
+* Following wall* 
+* Turn left*
+* Obstacle avoidance*
+* Obstacle detection*
+* Run through automatic door*
 
 
 Manual control:
-* Object detection using openCV *
-* Using keyboard **r** to start the robot *
-* Using keyboard **m** to switch to manual stage *
-* Using keyboard **w** to move up *
-* Using keyboard **a** to turn left *
-* Using keyboard **d** to turn right *
-* Using keyboard **s** to move down *
-* Using keyboard o** to lift the forklift *
-* Using keyboard **p** to lift the forklift *
+* Object detection using openCV*
+* Using keyboard **r** to start the robot*
+* Using keyboard **m** to switch to manual stage*
+* Using keyboard **w** to move up*
+* Using keyboard **a** to turn left*
+* Using keyboard **d** to turn right*
+* Using keyboard **s** to move down*
+* Using keyboard o** to lift the forklift*
+* Using keyboard **p** to lift the forklift*
 
-*To execute the program: *
+*To execute the program:*
 *```Linux terminal```*:
-* Jump to the directory of **app.py** *
-* Type: **sudo python3 app.py** *
-* Then go to the IP of your raspberry Pi then type in the address of your web browser: **<Raspberry PI>/home** *
+* Jump to the directory of **app.py***
+* Type: **sudo python3 app.py***
+* Then go to the IP of your raspberry Pi then type in the address of your web browser: **<Raspberry PI>/home***
 
 
 

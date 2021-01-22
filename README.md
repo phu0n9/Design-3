@@ -30,7 +30,7 @@ Name: Group 10
 *```Linux terminal```*:
 * Jump to the directory of **app.py**
 * Type: **sudo python3 app.py**
-* Then go to the IP of your raspberry Pi then type in the address of your web browser: **<Raspberry PI>/home**
+* Then go to the IP of your raspberry Pi then type in the address of your web browser: **```<Raspberry PI>```/home**
 
 
 

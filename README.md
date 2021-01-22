@@ -25,7 +25,7 @@ Name: Group 10
 * Using keyboard o** to lift the forklift
 * Using keyboard **p** to lift the forklift
 
-* To execute the program:
+#### To execute the program:
 
 *```Linux terminal```*:
 * Jump to the directory of **app.py**

@@ -22,7 +22,7 @@ Name: Group 10
 * Using keyboard **a** to turn left
 * Using keyboard **d** to turn right
 * Using keyboard **s** to move down
-* Using keyboard o** to lift the forklift
+* Using keyboard **o** to lift the forklift
 * Using keyboard **p** to lift the forklift
 
 #### To execute the program:

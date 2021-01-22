@@ -7,29 +7,25 @@ Name: Group 10
 ## Features:
 
 Automatic moving: 
-<ol>
-<li>Following wall</li>
-<li>Turn left</li>
-<li>Obstacle avoidance</li>
-<li>Obstacle detection</li>
-<li>Run through automatic door</li>
-</ol> 
+* Following wall * 
+* Turn left *
+* Obstacle avoidance *
+* Obstacle detection *
+* Run through automatic door *
 
 
 Manual control:
-<ol>
-<li>Object detection using openCV</li>
-<li>Using keyboard **r** to start the robot</li>
-<li>Using keyboard **m** to switch to manual stage</li>
-<li>Using keyboard **w** to move up</li>
-<li>Using keyboard **a** to turn left</li>
-<li>Using keyboard **d** to turn right</li>
-<li>Using keyboard **s** to move down</li>
-<li>Using keyboard **o** to lift the forklift</li>
-<li>Using keyboard **p** to lift the forklift</li>
-</ol> 
+* Object detection using openCV *
+* Using keyboard **r** to start the robot *
+* Using keyboard **m** to switch to manual stage *
+* Using keyboard **w** to move up *
+* Using keyboard **a** to turn left *
+* Using keyboard **d** to turn right *
+* Using keyboard **s** to move down *
+* Using keyboard o** to lift the forklift *
+* Using keyboard **p** to lift the forklift *
 
-To execute the program:
+*To execute the program: *
 *```Linux terminal```*:
 * Jump to the directory of **app.py** *
 * Type: **sudo python3 app.py** *

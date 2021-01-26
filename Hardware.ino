@@ -44,7 +44,7 @@ SharpIR sensor1( SharpIR::GP2Y0A21YK0F , A0);
 SharpIR sensor2( SharpIR::GP2Y0A21YK0F , A1);
 SharpIR sensor3( SharpIR::GP2Y0A21YK0F , A2);
 
-typedef enum {start, initial, follow_wall, gap1, turn_left1, obstacle1, turn_left2, obstacle2, object, manual} STATE;
+typedef enum {start, initial, follow_wall, gap1, turn_left1, obstacle1, turn_left2, obstacle2, object, manual} STATE; // declare FSM
 STATE robot_mode = start, prev_state = start;      
 
 int distance1 = 0, distance2 = 0, distance3 = 0, distance4 = 0, count_init = 0, count_stuck = 0, count_track = 0, count = 0, count_gap = 0, count_tl1 = 0, count_tl2 = 0, count_obs = 0;
@@ -55,7 +55,7 @@ int current_time2 = 0, previous_time2 = 0;
 
 volatile long encoderValue = 0;
 char input;
-double velocity;
+double velocity; 
 
 void setup()
 {
@@ -63,11 +63,11 @@ void setup()
   motor_wheel.Setup();
   
   servo.Setup();
-  pinMode(3, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP); 
   
   digitalWrite(3, HIGH);
 
-  attachInterrupt(digitalPinToInterrupt(3), updateEncoder, HIGH); 
+  attachInterrupt(digitalPinToInterrupt(3), updateEncoder, HIGH); //Trigger interrupt for encoder
   
   distance = readPing();
   distance1 = read_sensor1(); //body right sensor
@@ -91,7 +91,7 @@ void setup()
   sei();
 }
 
-int readPing() { 
+int readPing() {  // Ultrasonic sensor
   int cm = sonar.ping_cm();
   if(cm==0)
   {
@@ -123,7 +123,7 @@ int read_sensor1(){
 }
 
 int read_sensor2(){
-  int d2 = sensor2.getDistance(); //right front sensor
+  int d2 = sensor2.getDistance(); //Rear sensor
   if(d2 >= 40 && j < 10)
   {
     j++;
@@ -145,7 +145,7 @@ int read_sensor2(){
 }
 
 int read_sensor3(){
-  int d3 = sensor3.getDistance(); //right front sensor
+  int d3 = sensor3.getDistance(); //45° left front sensor
   if(d3 >= 60 && k < 10)
   {
     k++;
@@ -257,10 +257,10 @@ void loop() {
   switch(robot_mode) {
     /*State 0 Received the signal to start*/
     case start:
-     while(Serial.available()){
+     while(Serial.available()){ //Read serial from the Web-APP
       delay(3);
       input = Serial.read();
-      if(input == 'r'){
+      if(input == 'r'){ // If the user presses letter "R" via web-app, robot starts to change state to initial state (for automatic section)
         robot_mode = initial;
         break;
       }
@@ -271,9 +271,9 @@ void loop() {
       delay(3);
       distance1 = read_sensor1();
       distance2 = read_sensor2();
-      if((distance1 <= 20) && (distance2 <= 20)) {
+      if((distance1 <= 20) && (distance2 <= 20)) { // if sensors 1 and 2 is inside the wall, change state to follow-wall
         count_init++;
-        if(count_init >= 6) {
+        if(count_init >= 6) { 
           count_init = 0;
           prev_state = initial;
           robot_mode = follow_wall;
@@ -288,9 +288,9 @@ void loop() {
       if((distance1 <= 30) && (distance2 <= 30)) //sensor 1 and sensor 2 hit a wall
       {
         if(distance1 == 7 && distance2 == 7) distance1 = 6;
-        else if(distance1 == 7 && distance1 - distance2 < 0) {
+        else if(distance1 == 7 && distance1 - distance2 < 0) { //distance1-distance2 < 0 means the right front sensor tends to hit the wall
           count_stuck++;
-          if(count_stuck >= 5) {
+          if(count_stuck >= 5) { // if the front sensor tends to hit the wall then make a turn-left to avoid collision
             motor_wheel.left(speed_A, speed_B);
             delay(30);
             count_stuck = 0;
@@ -308,12 +308,12 @@ void loop() {
         } else motor_wheel.fwd(speed_A, speed_B + correction);  
       } else if(distance1 > 30) { //sensor 1 starts detecting a gap
         motor_wheel.sto(speed_A, speed_B);
-        while(count < 4) { //if the robot is in a gap long enough, change state 
+        while(count < 4) { //if the robot is in a gap long enough, change state to gap1
           distance1 = read_sensor1();
           if(distance1 > 30) count++;
         }
         count = 0;
-        if(prev_state == initial) robot_mode = gap1;
+        if(prev_state == initial) robot_mode = gap1; 
         else if(prev_state == gap1) robot_mode = turn_left1;
       }
 //      Serial.println("follow_wall");
@@ -324,14 +324,14 @@ void loop() {
     distance2 = read_sensor2();
     if((distance1 <= 20) && (distance2 <= 20)) {
       motor_wheel.sto(speed_A, speed_B);
-      while(count_gap > 2) { //if the robot is in a wall long enough, change state 
+      while(count_gap > 2) { //if the robot is in a wall long enough, change state back to follow-wall
         distance1 = read_sensor1();
         distance2 = read_sensor2();
         if((distance1 <= 30) && (distance2 <= 30)) count_gap++;
       }
       prev_state = gap1;
-      robot_mode = follow_wall;
-      count_gap = 0;
+      robot_mode = follow_wall; // change state back to follow-wall
+      count_gap = 0; 
     } else motor_wheel.fwd(speed_A, speed_B); 
 //    Serial.println("gap1");
     break;
@@ -341,14 +341,14 @@ void loop() {
     distance1 = read_sensor1();
     distance2 = read_sensor2();
     
-    if(distance3 <= 40) {
+    if(distance3 <= 40) { // Whenever the 45° left-sensor detects a wall that is under 40cm to the robot then make a turn-left
       motor_wheel.left(speed_A + 5, speed_B + 5);
       delay(30); 
     } else if((distance1 <= 30) && (distance2 <= 30)) {
         count_tl1++; 
-        if(count_tl1 >= 3) { //if the robot is in a wall long enough, change state
+        if(count_tl1 >= 3) { //if the robot is in a wall long enough (distance from right front sensor and right rear sensor to the wall is under 30cm), change state to obstacle 1
           prev_state = turn_left1;
-          robot_mode = obstacle1;
+          robot_mode = obstacle1; //change state to obstacle 1
           count_tl1 = 0; 
         }  
     } else motor_wheel.fwd(speed_A, speed_B);
@@ -361,22 +361,22 @@ void loop() {
     distance1 = read_sensor1();
     distance2 = read_sensor2();
     distance3 = read_sensor3();
-    if(distance <= 17 && distance2 <= 30) motor_wheel.sto(speed_A, speed_B);
+    if(distance <= 17 && distance2 <= 30) motor_wheel.sto(speed_A, speed_B); // if the ultrasonic sensor detects a an object that is below 17cm to the obstacle, then stops
     else if(distance3 <= 22) motor_wheel.sto(speed_A, speed_B); 
     else if(distance2 > 30 && distance3 > 22) { // turn left once both distance 1 and 3 are clear of sight
         motor_wheel.sto(speed_A, speed_B);
         count_obs++;
         if(count_obs >= 5) {
           prev_state = obstacle1;
-          robot_mode = turn_left2;
+          robot_mode = turn_left2; // change state to turn-left2 whenever distance 1 and 3 are clear of sight
           count_obs = 0;
         }
     } else if((distance1 <= 30) && (distance2 <= 30)) {
       if(distance1 == 7 && distance2 == 7) distance1 = 6;
-        else if(distance1 == 7 && distance1 - distance2 < 0) {
+        else if(distance1 == 7 && distance1 - distance2 < 0) { //distance1-distance2 < 0 means the right front sensor tends to hit the wall
           count_stuck++;
           if(count_stuck >= 3) {
-            motor_wheel.left(speed_A + 5, speed_B + 5);
+            motor_wheel.left(speed_A + 5, speed_B + 5);  // if the front sensor tends to hit the wall then make a turn-left to avoid collision
             delay(30);
             count_stuck = 0;
           }
@@ -399,7 +399,7 @@ void loop() {
     distance3 = read_sensor3();
     distance1 = read_sensor1();
     distance2 = read_sensor2();
-    if(distance3 <= 40) {
+    if(distance3 <= 40) { // Whenever the 45° left-sensor detects a wall that is under 40cm to the robot then make a turn-left
         motor_wheel.left(speed_A + 5, speed_B + 5);
         delay(35); 
     } else if((distance1 <= 20) && (distance2 <= 20)) { 
@@ -417,14 +417,14 @@ void loop() {
     distance = readPing();
     distance1 = read_sensor1();
     distance2 = read_sensor2();
-    if(distance <= 20 && distance2 <= 30) motor_wheel.sto(speed_A, speed_B);
+    if(distance <= 20 && distance2 <= 30) motor_wheel.sto(speed_A, speed_B); // if the ultrasonic sensor see the dynamic gate that is under 20cm from the robot, then stops
     else if((distance1 <= 30) && (distance2 <= 30)) //sensor 1 and sensor 2 hit a wall
     {
       if(distance1 == 7 && distance2 == 7) distance1 = 6;
-        else if(distance1 == 7 && distance1 - distance2 < 0) {
+        else if(distance1 == 7 && distance1 - distance2 < 0) { //distance1-distance2 < 0 means the right front sensor tends to hit the wall
           count_stuck++;
           if(count_stuck >= 3) {
-            motor_wheel.left(speed_A + 5, speed_B + 5);
+            motor_wheel.left(speed_A + 5, speed_B + 5);  // if the front sensor tends to hit the wall then make a turn-left to avoid collision
             delay(30);
             count_stuck = 0;
           }
@@ -440,11 +440,11 @@ void loop() {
            }
         } else motor_wheel.fwd(speed_A, speed_B + correction);
     }
-    else if(distance1 > 30 || distance2 > 30) {
+    else if(distance1 > 30 || distance2 > 30) { // Once the right front sensor and right rear sensor see a gap at the dynamic gate, then speeds up to avoid collision to the gate
           prev_state = obstacle2;
           motor_wheel.fwd(speed_A + 50, speed_B + 50);
           delay(700);
-          robot_mode = object;
+          robot_mode = object; //Change state to manual once the passing is finished
     } 
 //    Serial.println("obstacle2");
     break;
@@ -452,10 +452,10 @@ void loop() {
     /*State 8 Stop before the pallet*/
     case object:
     motor_wheel.sto(speed_A, speed_B);
-    while(Serial.available()){
+    while(Serial.available()){ 
       delay(3);
       input = Serial.read();
-      if(input == 'm') robot_mode = manual;
+      if(input == 'm') robot_mode = manual; // After stops in-front of the pallet, if the user presses letter "m" via web-app, the robot changes to state manual
       break;
     }
     break;

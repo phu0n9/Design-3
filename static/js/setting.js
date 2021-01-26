@@ -12,7 +12,7 @@ var second_manual_land;
 var transfer_data;
 var count = 0;
 
-
+// Drawing multiple rectangles
 function startGame() {
     myGameArea.start();
     firstLand = new component(410,10,"orange",50,240,"");
@@ -45,6 +45,7 @@ var myGameArea = {
     }
 }
 
+// Create rectangles boxes using this
 function component(width, height, color, x, y,text) {
     this.gamearea = myGameArea;
     this.width = width;
@@ -67,6 +68,7 @@ function component(width, height, color, x, y,text) {
     }
 }
 
+// get turn right API from back end
 function get_turn_right_button(){
     fetch(`${window.origin}/right`).then((resp) => resp.json())
     .then(function(text){
@@ -78,6 +80,7 @@ function get_turn_right_button(){
     myGamePiece.speedY = -1;
 }
 
+// get turn left API from back end
 function get_turn_left_button(){
     fetch(`${window.origin}/left`).then((resp) => resp.json())
     .then(function(text){
@@ -89,6 +92,7 @@ function get_turn_left_button(){
     myGamePiece.speedY = 1;
 }
 
+// get going up API from back end
 function get_turn_up_button(){
     fetch(`${window.origin}/up`).then((resp) => resp.json())
     .then(function(text){
@@ -100,6 +104,7 @@ function get_turn_up_button(){
     myGamePiece.speedX = -1;
 }
 
+// get going down API from back end
 function get_turn_down_button(){
     fetch(`${window.origin}/down`).then((resp) => resp.json())
     .then(function(text){
@@ -111,6 +116,7 @@ function get_turn_down_button(){
     myGamePiece.speedX = 1;
 }
 
+// get forklift up API from back end
 function lift_up(){
     fetch(`${window.origin}/lift_up`).then((resp) => resp.json())
     .then(function(text){
@@ -120,6 +126,7 @@ function lift_up(){
     })
 }
 
+// get forklift down API from back end
 function lift_down(){
     fetch(`${window.origin}/lift_down`).then((resp) => resp.json())
     .then(function(text){
@@ -130,6 +137,7 @@ function lift_down(){
     })
 }
 
+// detecting if keyboard is pressed
 function manualControl(){
     if (myGameArea.key && myGameArea.key == 65) {get_turn_left_button() }
     if (myGameArea.key && myGameArea.key == 68) { get_turn_right_button()}
@@ -140,6 +148,7 @@ function manualControl(){
     if (myGameArea.key != 65 && myGameArea.key != 68 && myGameArea.key != 87 && myGameArea.key != 83 && myGameArea.key != 79 && myGameArea.key != 80){myGamePiece.speedY = 0; myGamePiece.speedX = 0;}
 }
 
+// get start API from back end
 function startButton(){
     fetch(`${window.origin}/stop`).then((resp) => resp.json())
     .then(function(text){
@@ -149,6 +158,7 @@ function startButton(){
     })
 }
 
+// get change mode API from back end
 function changeState(){
     fetch(`${window.origin}/mode`).then((resp) => resp.json())
     .then(function(text){
@@ -158,6 +168,7 @@ function changeState(){
     })
 }
 
+// chceck if start keyboard or change mode keyboard is pressed
 function checkStartOnPressed(){
     if (myGamePiece.x == 40 && myGamePiece.y == 240){
         if (myGameArea.key == 82){
@@ -178,8 +189,6 @@ function updateGameArea() {
     myGameArea.clear();
     myGamePiece.speedX = 0;
     myGamePiece.speedY = 0;    
-    // console.log("x",myGamePiece.x)
-    // console.log("y",myGamePiece.y)
     if(myGamePiece.x -myGamePiece.width <= 0){
         myGamePiece.x = 0 + myGamePiece.width
     }
@@ -190,7 +199,7 @@ function updateGameArea() {
         myGamePiece.y = myGameArea.height + myGamePiece.height
     }
 
-    if (checkStartOnPressed() == 1){
+    if (checkStartOnPressed() == 1){                                                            // if start keyboard is pressed
         if(myGamePiece.x  - myGamePiece.width < second_manual_land.width){
             myGamePiece.x = second_manual_land.width + myGamePiece.width + 8
         }
@@ -215,7 +224,7 @@ function updateGameArea() {
             myGamePiece.speedY = 0;
         }
     }
-    else if (checkStartOnPressed() == 2){
+    else if (checkStartOnPressed() == 2){                                                       // if the state is in manual mode, press m to switch state
         myGamePiece.speedX = 0;
         myGamePiece.speedY = 0;    
         manualControl()
@@ -236,37 +245,3 @@ function updateGameArea() {
     myGamePiece.newPos();    
     myGamePiece.update();
 }
-
-// function addLocation(){
-//     fetch(`${window.origin}/`,{
-//         method: "POST",
-//         credentials: "include",
-//         body: JSON.stringify(manualControl()),
-//         cache: "no-cache",
-//         headers: new Headers({
-//             'Accept':'application/json',
-//             'Content-Type':'application/json'
-//         })
-//     }).then(function(){
-//         updateGameArea();
-//         // console.log("Added")
-//     })        
-//     .catch(err => console.log(err))           
-// }
-
-// function updateLocation(){
-//     fetch(`${window.origin}/`,{
-//         method: "PUT",
-//         credentials: "include",
-//         body: JSON.stringify({id:0,data}),
-//         cache: "no-cache",
-//         headers: new Headers({
-//             'Accept':'application/json',
-//             'Content-Type':'application/json'
-//         })
-//     }).then(function(){
-//         updateGameArea();
-//         console.log("Updated")
-//     })        
-//     .catch(err => console.log(err))      
-// }

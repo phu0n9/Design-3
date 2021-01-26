@@ -1,3 +1,5 @@
+// Set interval time to update the UI within 1 seconds
+
 setInterval(function getData(){
     var direction = document.getElementById('direction')
     var velocity = document.getElementById('velocity')

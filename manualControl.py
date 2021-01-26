@@ -10,6 +10,8 @@ power = 0
 stage = 0
 
 data = {}
+
+# flushing data before use
 def flush_data():
     serial.Serial.flush(ser)
     serial.Serial.flushOutput(ser)
@@ -27,8 +29,8 @@ def data_display():
         try:
             flush_data()
             data = ser.readline()
-            decode_data = data.decode('utf-8', 'ignore')
-            sensor = decode_data.split()
+            decode_data = data.decode('utf-8', 'ignore')   #ignore the error and move to the next
+            sensor = decode_data.split()                   # split each data by whitespace
             power = float(sensor[0]) // 1000
             velocity = float(sensor[1]) * 2.04 / 60  # cm/s
             orientation = float(sensor[2])

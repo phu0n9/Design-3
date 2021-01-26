@@ -18,27 +18,34 @@ def get_contours(img, imgContour):
     contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contours = sorted(contours, key=cv2.contourArea, reverse=True)[:1]
     try:
-        cnt = contours[0]  # --- since there is only one contour in the image
-        area = cv2.contourArea(cnt)
-        peri = cv2.arcLength(cnt, True)
-        approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
+        cnt = contours[0]                   # --- since there is only one contour in the image
+        area = cv2.contourArea(cnt)         # contour area
+        peri = cv2.arcLength(cnt, True)     
+        approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)  
         result = 0
 
+        # find 4 extreme points in contours
         leftmost = tuple(cnt[cnt[:, :, 0].argmin()][0])
         rightmost = tuple(cnt[cnt[:, :, 0].argmax()][0])
         topmost = tuple(cnt[cnt[:, :, 1].argmin()][0])
         bottommost = tuple(cnt[cnt[:, :, 1].argmax()][0])
+
+        # find customized center respectively to the leftmost and the rightmost point
         center = ((leftmost[0] + rightmost[0]) // 2, (leftmost[1] + rightmost[1]) // 2)
 
+        # find contour coordinates, width and height
         x, y, w, h = cv2.boundingRect(approx)
 
         M = cv2.moments(cnt)
 
-        # calculate x,y coordinate of center
+        # calculate x,y coordinate of default center
         cX = int(M["m10"] / M["m00"] + 1e-5)
         cY = int(M["m01"] / M["m00"] + 1e-5)
 
+        # distance between the default center with the bottom point
         distance = int(math.sqrt(pow(bottommost[0] - cX, 2) + pow(bottommost[1] - cY, 2)))
+
+        # only detect if the contours is found (the contours is in the rectangle, this will allow to detect 1 object at a time)
         if distance < h:
 
             cv2.drawContours(imgContour, cnt, -1, (255, 0, 255), 3)
@@ -76,6 +83,7 @@ def get_contours(img, imgContour):
             distance_center_rightMost = int(
                 math.sqrt(pow(rightmost[0] - center[0], 2) + pow(rightmost[1] - center[1], 2)))
 
+            # draw enclosing circle
             (enclosing_x, enclosing_y), radius = cv2.minEnclosingCircle(cnt)
             center_enclosing = (int(enclosing_x), int(enclosing_y))
             radius = int(radius)
@@ -112,7 +120,7 @@ def get_contours(img, imgContour):
 
 def process_image(image):
     imgHsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    # Blue ones
+    # Dark Blue color 
     h_min = 90
     h_max = 179
     s_min = 130
@@ -120,17 +128,23 @@ def process_image(image):
     v_min = 0
     v_max = 255
 
+    # create mask for color detection
     lower = np.array([h_min, s_min, v_min], np.uint8)
     upper = np.array([h_max, s_max, v_max], np.uint8)
     mask = cv2.inRange(imgHsv, lower, upper)
 
+    # draw black background
     kernel = np.ones((5, 5), np.uint8)
 
+    # dilate black background and the mask
     imgDil = cv2.dilate(mask, kernel)
 
+    # get only the similarity between the real time image and the image with blue color
     imgMask = cv2.bitwise_and(image, imgHsv, mask=mask)
+
     area = get_contours(imgDil, imgMask)[1]
     points = get_contours(imgDil, imgMask)[2]
 
+    # only execute when the minimum area is 700 and the points are from 4 to 9
     if area > 700 and 4 <= points <= 9: 
         return get_contours(imgDil, imgMask)[0],imgMask

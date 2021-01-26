@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-
+# this method just for stacking image for displaying, use this when you are training data to see multiple filters
 def stackImages(scale, imgArray):
     rows = len(imgArray)
     cols = len(imgArray[0])

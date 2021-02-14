@@ -29,6 +29,15 @@ Name: Group 10
 * Using keyboard **o** to lift the forklift
 * Using keyboard **p** to lift the forklift
 
+#### OpenCV Shape Detection:
+**Cubic**
+![alt text](https://github.com/phu0n9/Design-3/blob/master/cubic.png?raw=true)
+
+**Cylinder**
+![alt text](https://github.com/phu0n9/Design-3/blob/master/cylinder.png?raw=true)
+
+
+
 #### To execute the program:
 
 *```Linux terminal```*:

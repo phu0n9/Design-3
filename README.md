@@ -3,7 +3,7 @@
 Name: Group 10
 ## Hardware implementation
 
-![alt text](https://github.com/phu0n9/Design-3/blob/master/image.jpg?raw=true)
+![alt text](https://github.com/phu0n9/Design-3/blob/master/image.png?raw=true)
 
 
 ## Software implementation

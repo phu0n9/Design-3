@@ -31,7 +31,8 @@ Name: Group 10
 
 #### OpenCV Shape Detection:
 **Cubic**
-![alt text](https://github.com/phu0n9/Design-3/blob/master/cubic.png?raw=true)<br/>
+![alt text](https://github.com/phu0n9/Design-3/blob/master/cubic.png?raw=true)
+&nbsp;
 **Cylinder**
 ![alt text](https://github.com/phu0n9/Design-3/blob/master/cylinder.png?raw=true)
 

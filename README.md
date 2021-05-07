@@ -45,6 +45,6 @@ Name: Group 10
 * Type: **sudo python3 app.py**
 * Then go to the IP of your raspberry Pi then type in the address of your web browser: **```<Raspberry PI>```/home**
 
-
-
+#### Issues:
+This project uses **HTTP** as the connection protocol, in which, **REST API** is deployed into the project. However, for the real-time communication, it is not advisable to use this method. For the real-time communication between getting data from the hardware side, **WebSocket** should be considered instead. Moreover, for a smooth and fast signal for the video streaming, **UDP** is more favourable than **WebSocket**. Maybe a hybrid-approach(WebSocket for the real-time data update and UDP for the Video Streaming) would be better.
 

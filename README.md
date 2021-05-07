@@ -47,4 +47,5 @@ Name: Group 10
 
 #### Issues:
 This project uses **HTTP** as the connection protocol, in which, **REST API** is deployed into the project. However, for the real-time communication, it is not advisable to use this method. For the real-time communication between getting data from the hardware side, **WebSocket** should be considered instead. Moreover, for a smooth and fast signal for the video streaming, **UDP** is more favourable than **WebSocket**. Maybe a hybrid-approach(WebSocket for the real-time data update and UDP for the Video Streaming) would be better.
+Futhermore, **React.js** should be more considered for the response of the UI update, therefore, the HTML page does not have to set the interval to update which is a poor practice.
 

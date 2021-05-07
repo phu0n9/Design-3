@@ -20,14 +20,14 @@ Name: Group 10
 
 #### Manual control:
 * Object detection using openCV
-* Using keyboard **r** to start the robot
-* Using keyboard **m** to switch to manual stage
-* Using keyboard **w** to move up
-* Using keyboard **a** to turn left
-* Using keyboard **d** to turn right
-* Using keyboard **s** to move down
-* Using keyboard **o** to lift the forklift
-* Using keyboard **p** to lift the forklift
+* Using keyboard `r` to start the robot
+* Using keyboard `m` to switch to manual stage
+* Using keyboard `w` to move up
+* Using keyboard `a` to turn left
+* Using keyboard `d` to turn right
+* Using keyboard `s` to move down
+* Using keyboard `o` to lift the forklift
+* Using keyboard `p` to lift the forklift
 
 #### OpenCV Shape Detection:
 **Cubic**
